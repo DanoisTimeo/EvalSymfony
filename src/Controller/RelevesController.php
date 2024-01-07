@@ -22,11 +22,9 @@ class RelevesController extends AbstractController
 
         foreach ($releves as $releve) {
             //convertir le getTableau(); brut en int
-
-
-            // $rbrute = $releve->getRelevebrut();
-            $rbrute = $releve->getRelevebrut();//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-            $rbruteArray = array_map('intval', str_split($rbrute));//aaaaaaaaaaaaa
+            //$rbrute = explode('/', $releve->getRelevebrut());
+            $rbrute = $releve->getRelevebrut();
+            $rbruteArray = array_map('intval', str_split($rbrute));
             $index = 0;
             $nombresPerso = array_values($rbruteArray);
 

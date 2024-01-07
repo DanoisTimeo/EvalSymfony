@@ -17,7 +17,7 @@ class Releves
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
-    #[ORM\Column(length: 17)]
+    #[ORM\Column(length: 9)]
     private ?string $relevebrut = null;
 
     #[ORM\ManyToOne(targetEntity: Lieux::class)]

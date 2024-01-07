@@ -5,10 +5,11 @@
 {% block body %}
     <h1>Lieux index</h1>
 
+    <a href="{{ path('app_releves_index') }}" class="btn btn-info">retour au relevés</a>
+
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nom</th>
                 <th>actions</th>
             </tr>
@@ -16,11 +17,10 @@
         <tbody>
         {% for lieux in lieuxes %}
             <tr>
-                <td>{{ lieux.id }}</td>
                 <td>{{ lieux.nom }}</td>
-                <td>
-                    <a href="{{ path('app_lieux_show', {'id': lieux.id}) }}">show</a>
-                    <a href="{{ path('app_lieux_edit', {'id': lieux.id}) }}">edit</a>
+                <td style="display: flex">
+                    {{ include('lieux/_delete_form.html.twig') }}
+                    <a href="{{ path('app_lieux_edit', {'id': lieux.id}) }}" class="btn btn-info" style="width: 80px; font-size: 13px">modifier</a>
                 </td>
             </tr>
         {% else %}
@@ -30,6 +30,6 @@
         {% endfor %}
         </tbody>
     </table>
+    <a href="{{ path('app_lieux_new') }}" class="btn btn-success">Ajouter</a>
 
-    <a href="{{ path('app_lieux_new') }}">Create new</a>
 {% endblock %}

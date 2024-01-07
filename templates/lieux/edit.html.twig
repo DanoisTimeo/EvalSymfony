@@ -3,11 +3,11 @@
 {% block title %}Edit Lieux{% endblock %}
 
 {% block body %}
-    <h1>Edit Lieux</h1>
+    <h1>Modifier le Lieu</h1>
 
-    {{ include('lieux/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('lieux/_form.html.twig', {'button_label': 'Modifier'}) }}
 
-    <a href="{{ path('app_lieux_index') }}">back to list</a>
+    <a href="{{ path('app_lieux_index') }}">retour</a>
 
     {{ include('lieux/_delete_form.html.twig') }}
 {% endblock %}

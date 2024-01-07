@@ -21,10 +21,16 @@
             <tr>
                 <td>{{ relefe.date ? relefe.date|date('Y-m-d') : '' }}</td>
                 <td>{{ relefe.lieu.nom }}</td>
-                <td>{{ relefe.relevebrut }}</td>
+                <td>
+                    {% for caractere in relefe.relevebrut|split('') %}
+                        {{ caractere }}
+                        {% if loop.index % 1 == 0 and not loop.last %}
+                            /
+                        {% endif %}
+                    {% endfor %}</td>
                 <td>
                     <table style="border-collapse: collapse; border: 1px solid black;">
-                        {% set numbers = relefe.relevebrut|split('/') %}
+                        {% set numbers = relefe.relevebrut|split('') %}
                         {% for i, number in numbers %}
                             {% if loop.index % 3 == 1 %}
                                 <tr>
@@ -45,17 +51,17 @@
                     -Si la valeur de la case est 2 alors les 2 premiere case du tableau sont vertes etc etc</td>-->
 
                 <td>
-                    <table class="visualisation-table">
-                        {% set petitsTableaux = tableaux[relefe.id] %}
-                        {% for ligne in petitsTableaux %}
+                    <table class="visualisation" style="border-collapse: collapse;">
+                        {% set TableauP = tableaux[relefe.id] %}
+                        {% for ligne in TableauP %}
                             <tr>
                                 {% for tableau in ligne %}
-                                    <td>
+                                    <td style="padding: 0; margin: 0;">
                                         <table>
-                                            {% for sousLigne in tableau %}
+                                            {% for LigneP in tableau %}
                                                 <tr>
-                                                    {% for couleur in sousLigne %}
-                                                        <td class="{{ couleur }}"></td>
+                                                    {% for couleur in LigneP%}
+                                                        <td class="{{ couleur }}" style="padding: 0; margin: 0;"></td>
                                                     {% endfor %}
                                                 </tr>
                                             {% endfor %}
@@ -85,26 +91,19 @@
         </tbody>
     </table>
 <style>
-    .visualisation-table {
-        border-collapse: collapse;
-    }
 
-    .visualisation-table td {
-        padding: 0;
-        margin: 0;
-    }
-
-    .visualisation-table .vert {
+    .visualisation .vert {
         background-color: green;
         width: 15px;
         height: 15px;
     }
 
-    .visualisation-table .blanc {
+    .visualisation .blanc {
         background-color: white;
         width: 15px;
         height: 15px;
     }
 </style>
-    <a href="{{ path('app_releves_new') }}">Create new</a>
+    <a href="{{ path('app_releves_new') }}" class="btn btn-success">Ajouter</a>
+    <a href="{{ path('app_lieux_index') }}" class="btn btn-success">administrer les lieux</a>
 {% endblock %}
