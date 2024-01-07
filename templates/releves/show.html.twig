@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Releves{% endblock %}
+
+{% block body %}
+    <h1>Releves</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ relefe.id }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ relefe.date ? relefe.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Relevebrut</th>
+                <td>{{ relefe.relevebrut }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_releves_index') }}">back to list</a>
+
+    <a href="{{ path('app_releves_edit', {'id': relefe.id}) }}">edit</a>
+
+    {{ include('releves/_delete_form.html.twig') }}
+{% endblock %}

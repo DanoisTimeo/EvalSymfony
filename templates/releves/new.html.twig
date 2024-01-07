@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Releves{% endblock %}
+
+{% block body %}
+    <h1>Create new Releves</h1>
+
+    {{ include('releves/_form.html.twig') }}
+
+    <a href="{{ path('app_releves_index') }}">back to list</a>
+{% endblock %}

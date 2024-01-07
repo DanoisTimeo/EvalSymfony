@@ -1,0 +1,110 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Releves index{% endblock %}
+
+{% block body %}
+    <h1>Relevés</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Lieu</th>
+                <th scope="col">Relevé brut</th>
+                <th scope="col">Tableau</th>
+                <th scope="col">Visualisation</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for relefe in releves %}
+            <tr>
+                <td>{{ relefe.date ? relefe.date|date('Y-m-d') : '' }}</td>
+                <td>{{ relefe.lieu.nom }}</td>
+                <td>{{ relefe.relevebrut }}</td>
+                <td>
+                    <table style="border-collapse: collapse; border: 1px solid black;">
+                        {% set numbers = relefe.relevebrut|split('/') %}
+                        {% for i, number in numbers %}
+                            {% if loop.index % 3 == 1 %}
+                                <tr>
+                            {% endif %}
+                            <td style="border: 1px solid black; padding: 5px;">{{ number }}</td>
+                            {% if loop.index % 3 == 0 or loop.last %}
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </td>
+                 <!--<td>
+                    -Récuperer les nombres du relevé brut
+                    -Les mettre dans un tableau de 3 * 3
+                    -Dans chaque case du tableau, créer un tableau de 3 * 3 (nom = petit tableau)
+                    -Dans chaque petit tableau, mettre un background-color a chaque petites cases en fonction de la valeur
+                    -Si la valeur de la case est 3 alors les 3 premiere case du tableau sont vertes
+                    -Si la valeur de la case est 2 alors les 2 premiere case du tableau sont vertes etc etc</td>-->
+
+                <td>
+                    <table class="visualisation-table">
+                        {% set petitsTableaux = tableaux[relefe.id] %}
+                        {% for ligne in petitsTableaux %}
+                            <tr>
+                                {% for tableau in ligne %}
+                                    <td>
+                                        <table>
+                                            {% for sousLigne in tableau %}
+                                                <tr>
+                                                    {% for couleur in sousLigne %}
+                                                        <td class="{{ couleur }}"></td>
+                                                    {% endfor %}
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="no-records">Aucun enregistrement trouvé</td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </td>
+
+
+                <td style="display: flex">
+                    {{ include('releves/_delete_form.html.twig') }}
+                    <a href="{{ path('app_releves_edit', {'id': relefe.id}) }}" class="btn btn-info" style="width: 80px; font-size: 13px">modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<style>
+    .visualisation-table {
+        border-collapse: collapse;
+    }
+
+    .visualisation-table td {
+        padding: 0;
+        margin: 0;
+    }
+
+    .visualisation-table .vert {
+        background-color: green;
+        width: 15px;
+        height: 15px;
+    }
+
+    .visualisation-table .blanc {
+        background-color: white;
+        width: 15px;
+        height: 15px;
+    }
+</style>
+    <a href="{{ path('app_releves_new') }}">Create new</a>
+{% endblock %}
